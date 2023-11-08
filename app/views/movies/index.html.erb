@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Películas Favoritas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .movie-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 1px solid #ccc;
+      margin: 10px;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      max-width: 250px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .movie-card img {
+      max-width: 200px;
+      height: auto;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.05);
+    }
+
+    .movie-card h5 {
+      margin-bottom: 0;
+    }
+
+    .search-form {
+      margin-top: 20px;
+    }
+      .movie-card p {
+    max-height: 100px; /* Altura máxima para la descripción */
+    overflow: hidden;  /* Ocultar el exceso de texto */
+    text-overflow: ellipsis; /* Agregar puntos suspensivos al final del texto truncado */
+  }
+
+    .alert {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+ <%= render "shared/nav" %>
+<body>
+
+  <div class="container">
+
+ 
+
+
+    <%= render "shared/search_form" %>
+
+    <% if flash[:success].present? %>
+      <div class="alert alert-success text-center">
+        <%= flash[:success] %>
+      </div>
+    <% elsif flash[:error].present? %>
+      <div class="alert alert-danger text-center">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+
+    <% if @movies.present? %>
+      <h2 class="mt-4 text-center">Películas</h2>
+      <div class="row mt-3 justify-content-center">
+        <% @movies.each do |movie| %>
+          <div class="col-md-4">
+            <div class="movie-card">
+              <% if movie['poster_path'].present? && movie['poster_path'] != "N/A" %>
+                <%= image_tag "https://image.tmdb.org/t/p/w500#{movie['poster_path']}", alt: movie['title'], class: "img-thumbnail" %>
+              <% else %>
+                <p>No hay póster disponible</p>
+              <% end %>
+              <div class="mt-2">
+                <h5><strong><%= movie['title'] %></strong></h5>
+                <p>(Año: <%= movie['release_date'].to_s.split('-').first %>)</p>
+                <p><%= movie['overview'] %></p>
+                <% if current_user %>
+                  <%= form_tag(movies_path, method: :post) do %>
+                    <%= hidden_field_tag 'movie[title]', movie['title'] %>
+                    <%= hidden_field_tag 'movie[year]', movie['release_date'].to_s.split('-').first %>
+                    <%= hidden_field_tag 'movie[plot]', movie['overview'] %>
+                    <%= hidden_field_tag 'movie[poster_url]', "https://image.tmdb.org/t/p/w500#{movie['poster_path']}" %>
+                    <%= submit_tag "Agregar a Favoritos", class: "btn btn-success btn-sm mt-2" %>
+                    <a href="<%= movie_details_path(movie['id']) %>" class="btn btn-success btn-sm mt-2">Ver detalles</a>
+
+
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Detalles de la Película</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #007BFF;
+      text-align: center;
+    }
+
+    /* Estilos de la película */
+    .movie-details {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #007BFF;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .movie-images {
+      display: flex;
+      justify-content: center;
+    }
+
+    .movie-images img {
+      max-width: 300px;
+      height: auto;
+      margin: 10px;
+      border: 1px solid #007BFF;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .movie-info {
+      margin-top: 20px;
+    }
+
+    .movie-details h3 {
+      font-size: 32px;
+      color: #007BFF;
+      margin: 0;
+    }
+
+    .movie-details p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .fa {
+      margin-right: 5px;
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <!-- Incluimos la navegación compartida -->
+  <%= render "shared/nav" %>
+
+  <div class="container">
+    <h1 class="mt-5">Detalles de la Película</h1>
+    <div class="movie-details">
+      <!-- Agregamos un div para las imágenes -->
+      <div class="movie-images">
+        <% if @movie['backdrop_path'].present? && @movie['backdrop_path'] != "N/A" %>
+          <%= image_tag "https://image.tmdb.org/t/p/w500#{@movie['backdrop_path']}", alt: @movie['title'], class: "img-thumbnail" %>
+        <% end %>
+        <% if @movie['backdrop_path'].present? && @movie['backdrop_path'] != "N/A" %>
+          <%= image_tag "https://image.tmdb.org/t/p/w500#{@movie['backdrop_path']}", alt: @movie['title'], class: "img-thumbnail" %>
+        <% end %>
+        <!-- Puedes agregar más imágenes aquí -->
+      </div>
+      <div class="movie-info">
+        <h3><i class="fas fa-film"></i><strong><%= @movie['title'] %></strong></h3>
+        <p><i class="fas fa-calendar-alt"></i><strong>Año de lanzamiento:</strong> <%= @movie['release_date'] %></p>
+        <p><i class="fas fa-info-circle"></i><strong>Descripción:</strong> <%= @movie['overview'] %></p>
+        <p><i class="fas fa-star"></i><strong>Calificación:</strong> <%= @movie['vote_average'] %></p>
+        <p><i class="fas fa-language"></i><strong>Idioma original:</strong> <%= @movie['original_language'] %></p>
+        <p><i class="fas fa-dollar-sign"></i><strong>Presupuesto:</strong> $<%= @movie['budget'] %></p>
+        <p><i class="fas fa-money-bill-wave"></i><strong>Ingresos:</strong> $<%= @movie['revenue'] %></p>
+        <p><i class="fas fa-clock"></i><strong>Duración:</strong> <%= @movie['runtime'] %> minutos</p>
+        <p><i class="fas fa-tag"></i><strong>Tagline:</strong> <%= @movie['tagline'] %></p>
+        <p><i class="fas fa-tags"></i><strong>Géneros:</strong>
+          <% if @movie['genres'].present? %>
+            <ul>
+              <% @movie['genres'].each do |genre| %>
+                <li><%= genre['name'] %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            No disponible
+          <% end %>
+        </p>
+        <p><i class="fas fa-building"></i><strong>Compañías de producción:</strong>
+          <% if @movie['production_companies'].present? %>
+            <ul>
+              <% @movie['production_companies'].each do |company| %>
+                <li><%= company['name'] %> (<%= company['origin_country'] %>)</li>
+              <% end %>
+            </ul>
+          <% else %>
+            No disponible
+          <% end %>
+        </p>
+        <p><i class="fas fa-globe"></i><strong>Países de producción:</strong>
+          <% if @movie['production_countries'].present? %>
+            <ul>
+              <% @movie['production_countries'].each do |country| %>
+                <li><%= country['name'] %> (<%= country['iso_3166_1'] %>)</li>
+              <% end %>
+            </ul>
+          <% else %>
+            No disponible
+          <% end %>
+        </p>
+        <p><i class="fas fa-volume-up"></i><strong>Idiomas hablados:</strong>
+          <% if @movie['spoken_languages'].present? %>
+            <ul>
+              <% @movie['spoken_languages'].each do |language| %>
+                <li><%= language['name'] %> (<%= language['iso_639_1'] %>)</li>
+              <% end %>
+            </ul>
+          <% else %>
+            No disponible
+          <% end %>
+        </p>
+        <p><i class="fas fa-check-circle"></i><strong>Estado:</strong> <%= @movie['status'] %></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
