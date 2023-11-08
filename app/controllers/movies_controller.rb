@@ -54,8 +54,9 @@ class MoviesController < ApplicationController
 
   def popular_movies(search_term = nil)
     api_key = '4cdb0dbd3ea893e166f8a05fbade0aa4'
-    url = if search_term.present?
-            "https://api.themoviedb.org/3/search/movie?api_key=#{api_key}&query=#{search_term}&language=es-ES"
+    encoded_title = URI.encode_www_form_component(search_term)
+    url = if encoded_title.present?
+            "https://api.themoviedb.org/3/search/movie?api_key=#{api_key}&query=#{encoded_title}&language=es-ES"
           else
             "https://api.themoviedb.org/3/movie/popular?api_key=#{api_key}&language=es-ES"
           end
