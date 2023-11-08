@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Películas Favoritas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .movie-card {
+      border: 1px solid #ddd;
+      padding: 5px;
+      margin: 10px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .movie-card img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .movie-card h5 {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .movie-card p {
+      font-size: 14px;
+    }
+
+    .no-favorites {
+      font-size: 18px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .delete-button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<%= render "shared/nav" %>
+<body>
+  <div class="container">
+    <h1 class="mt-5 text-center">Películas Favoritas</h1>
+
+    <% if @favorite_movies.any? %>
+      <div class="row mt-3">
+        <% @favorite_movies.each do |movie| %>
+          <div class="col-md-3">
+            <div class="movie-card">
+              <% if movie.poster_url.present? && movie.poster_url != "N/A" %>
+                <%= image_tag movie.poster_url, alt: movie.title %>
+              <% else %>
+                <%= image_tag "https://via.placeholder.com/150", alt: movie.title %>
+              <% end %>
+              <h5><strong><%= movie.title %></strong></h5>
+              <p>(Año: <%= movie.year %>)</p>
+              <%= form_for movie, url: movie_path(movie), method: :delete, remote: true do |f| %>
+                <%= f.submit "Eliminar", class: "btn btn-danger btn-sm delete-button" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="no-favorites">No tienes ninguna película favorita aún. ¡Busca y agrega algunas!</p>
+    <% end %>
+  </div>
+</body>
+</html>

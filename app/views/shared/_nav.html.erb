@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Estilo del menú */
+    .menu {
+      background-color: #35367b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    /* Estilo del logo */
+    .logo {
+      
+      font-weight: bold;
+      height: 50px; /* Altura fija para la imagen */
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 100%; 
+    }
+
+    .menu-options {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
+
+    .menu-option {
+      margin-right: 20px;
+    }
+
+    .menu-option:last-child {
+      margin-right: 0;
+    }
+
+    .menu-option a {
+      text-decoration: none;
+      color: white; /* Color del texto de las opciones del menú */
+      font-weight: bold;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <div class="logo">
+      <img src="../assets/LOGO.png" alt="">
+    </div>
+    <ul class="menu-options">
+      <li class="menu-option"><a href="/">Inicio</a></li>
+      <li class="menu-option"><a href="<%= favorites_path %>">Favoritas</a></li>
+      <li class="menu-option">
+          <%= link_to "Cerrar Sesión", destroy_user_session_path, class: ""%> 
+      </li>
+
+    </ul>
+  </div>
+</body>
+</html>

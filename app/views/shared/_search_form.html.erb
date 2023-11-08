@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    h2 {
+      color: #333;
+      text-align: center;
+    }
+    .search-container {
+      text-align: center;
+      margin: 50px auto;
+      width: 50%;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+    .input-group {
+      display: flex;
+      justify-content: center;
+    }
+    .form-control {
+      width: 70%;
+      padding: 10px;
+      border: 2px solid #333;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .btn-primary {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2>Buscar Películas</h2>
+  <div class="search-container">
+    <form action="<%= search_movies_path %>" method="get">
+      <div class="input-group mb-3">
+        <input type="text" name="search_term" class="form-control" placeholder="Buscar películas...">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
